@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-APP_ABI=(armeabi-v7a arm64-v8a x86-64)
+APP_ABI=(armeabi-v7a arm64-v8a)
 
 BASE_PATH=$(
 	cd "$(dirname $0)"
@@ -71,9 +71,9 @@ compile() {
 	make clean
 	checkExitCode $?
 	# make
-	make -j4 depend
+	make -j8 depend
 	checkExitCode $?
-	make -j4 all
+	make -j8 all
 	checkExitCode $?
 	# install
 	make install

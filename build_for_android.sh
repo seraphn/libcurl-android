@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-APP_ABI=(armeabi-v7a arm64-v8a x86-64)
+APP_ABI=(armeabi-v7a arm64-v8a)
 
 BASE_PATH=$(
 	cd "$(dirname $0)"
@@ -101,7 +101,7 @@ compile() {
 		--with-ssl=$BUILD_PATH/openssl/$ABI \
 		--with-zlib=$BUILD_PATH/zlib/$ABI \
 		--enable-static \
-		--enable-shared \
+		--disable-shared \
 		--disable-verbose \
 		--enable-threaded-resolver \
 		--enable-ipv6
@@ -110,7 +110,7 @@ compile() {
 	make clean
 	checkExitCode $?
 	# make
-	make -j4
+	make -j8
 	checkExitCode $?
 	# install
 	make install
@@ -137,8 +137,8 @@ compile() {
 	$AR -cr $BASE_PATH/libs/$ABI/libcurl.a $BASE_PATH/obj/$ABI/curl/*.o $BASE_PATH/obj/$ABI/openssl/*.o $BASE_PATH/obj/$ABI/zlib/*.o
 	checkExitCode $?
 	# copy dylib
-	cp -f $BUILD_PATH/curl/$ABI/lib/libcurl.so $BASE_PATH/libs/$ABI/libcurl.so
-	checkExitCode $?
+	#cp -f $BUILD_PATH/curl/$ABI/lib/libcurl.so $BASE_PATH/libs/$ABI/libcurl.so
+	#checkExitCode $?
 }
 
 # check system
